@@ -3,10 +3,10 @@ import { Image } from "@astrojs/image/components";
 
 const navLists = [
   { title: "Home", href: "/" },
-  { title: "News", href: "/news" },
-  { title: "Events", href: "/events" },
-  { title: "About", href: "/about" },
-  { title: "Contact us", href: "/contact" },
+  { title: "News", href: "/news/" },
+  { title: "Events", href: "/events/" },
+  { title: "About", href: "/about/" },
+  { title: "Contact us", href: "/contact/" },
 ];
 ---
 
@@ -40,7 +40,7 @@ const navLists = [
 
   <div class="flex-grow"></div>
 
-  <button class="hover:text-green-800">
+  <button id="menuButton" class="lg:hidden">
     <svg
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
@@ -52,27 +52,52 @@ const navLists = [
       <path
         stroke-linecap="round"
         stroke-linejoin="round"
-        d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-      ></path>
+        d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path>
     </svg>
   </button>
 
-  <button class="hover:text-green-800">
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke-width="1.5"
-      stroke="currentColor"
-      class="w-6 h-6"
-    >
-      <path
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        d="M10.5 21l5.25-11.25L21 21m-9-3h7.5M3 5.621a48.474 48.474 0 016-.371m0 0c1.12 0 2.233.038 3.334.114M9 5.25V3m3.334 2.364C11.176 10.658 7.69 15.08 3 17.502m9.334-12.138c.896.061 1.785.147 2.666.257m-4.589 8.495a18.023 18.023 0 01-3.827-5.802"
-      ></path>
-    </svg>
-  </button>
-
-  <div></div>
+  <div
+    id="menu"
+    class:list={[
+      "absolute w-screen bg-white !top-14 inset-0 z-10",
+      "opacity-0 invisible transition duration-300",
+      "lg:hidden flex flex-col",
+    ]}
+    style="height: calc(100vh - 3.5rem);"
+  >
+    <hr class="mt-4 mx-4" />
+    <ul class="flex flex-col p-6 gap-6">
+      {
+        navLists.map((nav) => (
+          <li>
+            <a href={nav.href} rel="prefetch">
+              <span class="text-lg font-semibold">{nav.title}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <div class="flex-grow"></div>
+    <span class="text-sm self-center mb-6">
+      Copyright © 2023, All Right Reserved.
+    </span>
+  </div>
 </header>
+
+<script is:inline>
+  const menuButton = document.getElementById("menuButton");
+  const menu = document.getElementById("menu");
+  menuButton.addEventListener("click", handleClick);
+  var menuOpen = false;
+  function handleClick() {
+    menuOpen = !menuOpen;
+    menu.style.opacity = menuOpen ? 1 : 0;
+    if (menuOpen) {
+      menu.style.visibility = "visible";
+    } else {
+      setTimeout(() => {
+        menu.style.visibility = "hidden";
+      }, 300);
+    }
+  }
+</script>
