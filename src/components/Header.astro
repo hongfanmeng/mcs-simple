@@ -25,11 +25,14 @@ const navLists = [
   <ul class="hidden lg:flex">
     {
       navLists.map((nav) => (
-        <a href={nav.href}>
-          <li class="hover:underline decoration-green-600 decoration-2 underline-offset-8 px-8 py-4">
+        <li>
+          <a
+            href={nav.href}
+            class="hover:underline decoration-green-600 decoration-2 underline-offset-8 px-8 py-4"
+          >
             <span class="text-lg hover:text-green-800">{nav.title}</span>
-          </li>
-        </a>
+          </a>
+        </li>
       ))
     }
   </ul>
