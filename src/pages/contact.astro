@@ -48,8 +48,13 @@ const contact = {
         {
           contact.info.map((info) => (
             <tr>
-              <td class="text-lg py-2 font-semibold">{info.title}</td>
-              <td class="text-lg py-2 pl-10 text-justify" style="hyphens:auto">
+              <td class="text-lg py-2 font-semibold align-top text-right">
+                {info.title}
+              </td>
+              <td
+                class="text-lg py-2 pl-4 lg:pl-8 text-justify"
+                style="hyphens:auto"
+              >
                 {info.content}
               </td>
             </tr>
