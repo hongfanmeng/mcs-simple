@@ -4,21 +4,21 @@ import { Image } from "@astrojs/image/components";
 const navLists = [
   { title: "Home", href: "/" },
   { title: "News", href: "/news" },
-  { title: "About", href: "/about" },
   { title: "Events", href: "/events" },
+  { title: "About", href: "/about" },
   { title: "Contact us", href: "/contact" },
 ];
 ---
 
-<header class="h-16 max-w-7xl mx-auto w-full flex items-center gap-5">
+<header class="p-4 max-w-7xl mx-auto w-full flex items-center gap-5">
   <a href="/">
     <Image
-      src="/mcs-logo.png"
+      src="/logo.png"
       format="png"
-      alt="MCS Logo"
+      alt="Logo"
       height={60}
       width={180}
-      class="mr-10"
+      class="mr-10 h-10 w-auto"
     />
   </a>
 
@@ -28,7 +28,7 @@ const navLists = [
         <li>
           <a
             href={nav.href}
-            class="hover:underline decoration-green-600 decoration-2 underline-offset-8 px-8 py-4"
+            class="hover:underline decoration-green-600 decoration-2 underline-offset-8 px-6 py-4"
           >
             <span class="text-lg hover:text-green-800">{nav.title}</span>
           </a>

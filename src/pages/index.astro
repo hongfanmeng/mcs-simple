@@ -1,9 +1,8 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import HomeSwiper from "../components/HomeSwiper.astro";
-import Card, { CardT } from "../components/Card.astro";
+import Card, { CardBase } from "../components/Card.astro";
 import { Image } from "@astrojs/image/components";
-import { clsx } from "clsx";
 
 const slides = [
   { imageSrc: "/carousel/p1.jpg", href: "#" },
@@ -12,13 +11,21 @@ const slides = [
   { imageSrc: "/carousel/p4.jpg", href: "#" },
 ];
 
-const cards = Array(3).fill({
+const news = Array(3).fill({
   title: "Duis feugiat dignissim condimentum.",
   href: "#",
   imageSrc: "/carousel/p1.jpg",
   desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eu magna mollis, scelerisque eros in, elementum ante. Suspendisse tincidunt consequat fringilla.",
   pubDate: new Date(),
-}) as CardT[];
+}) as CardBase[];
+
+const events = Array(3).fill({
+  title: "Duis feugiat dignissim condimentum.",
+  href: "#",
+  imageSrc: "/carousel/p2.jpg",
+  desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eu magna mollis, scelerisque eros in, elementum ante. Suspendisse tincidunt consequat fringilla.",
+  pubDate: new Date(),
+}) as CardBase[];
 
 const about = {
   imageSrc: "/carousel/p2.jpg",
@@ -34,10 +41,10 @@ const partners = [
   { imageSrc: "/carousel/p4.jpg", href: "#" },
 ];
 
-const titleClass = clsx([
-  "font-semibold mb-2",
+const titleClasses = [
+  "font-semibold mb-2 mx-auto w-fit",
   "text-xl md:text-2xl lg:text-3xl",
-]);
+];
 ---
 
 <BaseLayout title="Home">
@@ -45,20 +52,20 @@ const titleClass = clsx([
     <HomeSwiper slides={slides} />
 
     <section
-      class={clsx([
+      class:list={[
         "w-full max-w-5xl mx-auto px-5",
-        "flex flex-col lg:flex-row gap-5 lg:gap-10",
-      ])}
+        "flex flex-col md:flex-row gap-5 md:gap-10",
+      ]}
     >
-      <div class="lg:w-0 flex-grow">
-        <h2 class={titleClass}>
+      <div class="md:w-0 flex-grow">
+        <h2 class:list={[titleClasses, "md:mx-0"]}>
           {about.title}
         </h2>
-        <p>{about.content}</p>
+        <p style="hyphens:auto" class="text-justify">{about.content}</p>
       </div>
 
       <Image
-        class="lg:w-0 flex-grow rounded"
+        class="w-full md:w-0 flex-grow rounded"
         src={about.imageSrc}
         alt="image of about us"
         width={800}
@@ -68,30 +75,43 @@ const titleClass = clsx([
     </section>
 
     <section class="px-5">
-      <h2 class={clsx([titleClass, "mx-auto w-fit"])}>News</h2>
+      <h2 class:list={titleClasses}>News</h2>
 
       <div
-        class={clsx([
+        class:list={[
           "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-10 mt-5",
           "max-w-7xl w-full mx-auto",
-        ])}
+        ]}
       >
-        {cards.map((card) => <Card card={card} />)}
+        {news.map((card) => <Card card={card} />)}
       </div>
     </section>
 
     <section class="px-5">
-      <h2 class={clsx([titleClass, "mx-auto w-fit"])}>Our Partners</h2>
+      <h2 class:list={titleClasses}>Events</h2>
 
       <div
-        class={clsx([
-          "grid grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-10 mt-5",
+        class:list={[
+          "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-10 mt-5",
+          "max-w-7xl w-full mx-auto",
+        ]}
+      >
+        {events.map((card) => <Card card={card} />)}
+      </div>
+    </section>
+
+    <section class="px-5">
+      <h2 class:list={titleClasses}>Our Partners</h2>
+
+      <div
+        class:list={[
+          "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-10 mt-5",
           "max-w-5xl w-full mx-auto",
-        ])}
+        ]}
       >
         {
           partners.map((partner) => (
-            <a href={partner.href}>
+            <a href={partner.href} class="w-full">
               <Image
                 src={partner.imageSrc}
                 width={400}
@@ -99,7 +119,7 @@ const titleClass = clsx([
                 format="jpeg"
                 fit="cover"
                 alt="partner"
-                class="shadow-md hover:scale-110 transition rounded"
+                class="shadow-md hover:scale-110 transition rounded w-full h-auto"
               />
             </a>
           ))

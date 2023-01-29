@@ -1,9 +1,10 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { Image } from "@astrojs/image/components";
 
 export interface Props {
   title: string;
-  bannerSrc: string;
+  bannerSrc?: string;
   bannerTitle: string;
 }
 
@@ -11,7 +12,22 @@ const { title, bannerSrc, bannerTitle } = Astro.props;
 ---
 
 <BaseLayout title={title}>
-  <div class="">
-    {bannerTitle}
+  <div class="h-80 bg-green-600 flex items-center justify-center relative">
+    {
+      bannerSrc && (
+        <Image
+          src={bannerSrc}
+          width={1600}
+          height={900}
+          format="jpeg"
+          alt={bannerTitle}
+          class="object-cover w-full h-full"
+        />
+      )
+    }
+    <h1 class="absolute text-white text-4xl font-bold">
+      {bannerTitle}
+    </h1>
   </div>
+  <slot />
 </BaseLayout>

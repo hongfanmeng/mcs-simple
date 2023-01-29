@@ -1,0 +1,26 @@
+---
+import Card, { CardBase } from "../components/Card.astro";
+import BannerLayout from "../layouts/BannerLayout.astro";
+
+const events = Array(6).fill({
+  title: "Duis feugiat dignissim condimentum.",
+  href: "#",
+  imageSrc: "/carousel/p1.jpg",
+  desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eu magna mollis, scelerisque eros in, elementum ante. Suspendisse tincidunt consequat fringilla.",
+  pubDate: new Date(),
+}) as CardBase[];
+---
+
+<BannerLayout title="Events" bannerTitle="Events">
+  <div
+    class:list={[
+      "mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3",
+      "w-full max-w-7xl mx-auto",
+      "gap-5 lg:gap-10 px-5",
+    ]}
+  >
+    {events.map((event) => <Card card={event} />)}
+  </div>
+
+  <div class="mt-10"></div>
+</BannerLayout>

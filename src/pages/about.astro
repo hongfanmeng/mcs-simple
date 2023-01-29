@@ -1,0 +1,80 @@
+---
+import BannerLayout from "../layouts/BannerLayout.astro";
+import { Image } from "@astrojs/image/components";
+
+const about = {
+  imageSrc: "/carousel/p2.jpg",
+  title: "About us",
+  content:
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu sem dolor. Nam scelerisque urna ipsum, eu feugiat turpis euismod vitae. Sed sed nisi ac arcu aliquet feugiat. Quisque iaculis dolor vel arcu finibus dapibus ac sed odio. Integer auctor lobortis libero. Donec convallis nulla in tristique porta. Aenean at elit id mauris auctor semper.",
+};
+
+const titleClasses = [
+  "font-semibold mb-2 mx-auto w-fit",
+  "text-xl md:text-2xl lg:text-3xl",
+];
+
+const partners = [
+  { imageSrc: "/carousel/p1.jpg", href: "#" },
+  { imageSrc: "/carousel/p2.jpg", href: "#" },
+  { imageSrc: "/carousel/p3.jpg", href: "#" },
+  { imageSrc: "/carousel/p4.jpg", href: "#" },
+];
+---
+
+<BannerLayout title="About us" bannerTitle="About us">
+  <section
+    class:list={[
+      "w-full max-w-5xl mx-auto px-5",
+      "flex flex-col md:flex-row gap-5 md:gap-10",
+      "mt-10",
+    ]}
+  >
+    <div class="md:w-0 flex-grow">
+      <h2 class:list={[titleClasses, "md:mx-0"]}>
+        {about.title}
+      </h2>
+      <p style="hyphens:auto" class="text-justify">{about.content}</p>
+    </div>
+
+    <Image
+      class="w-full md:w-0 flex-grow rounded"
+      src={about.imageSrc}
+      alt="image of about us"
+      width={800}
+      height={450}
+      format="jpeg"
+    />
+  </section>
+
+  <div class="mt-10"></div>
+
+  <section class="px-5">
+    <h2 class:list={titleClasses}>Our Partners</h2>
+
+    <div
+      class:list={[
+        "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-10 mt-5",
+        "max-w-5xl w-full mx-auto",
+      ]}
+    >
+      {
+        partners.map((partner) => (
+          <a href={partner.href} class="w-full">
+            <Image
+              src={partner.imageSrc}
+              width={400}
+              height={150}
+              format="jpeg"
+              fit="cover"
+              alt="partner"
+              class="shadow-md hover:scale-110 transition rounded w-full h-auto"
+            />
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <div class="mt-10"></div>
+</BannerLayout>
