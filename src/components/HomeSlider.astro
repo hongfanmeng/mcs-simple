@@ -1,0 +1,34 @@
+---
+interface Props {
+  slides: { imageSrc: string; href: string }[];
+}
+const { slides } = Astro.props;
+
+import "flickity/css/flickity.css";
+import { Image } from "@astrojs/image/components";
+---
+
+<div class="main-carousel">
+  {
+    slides.map((slide) => (
+      <a href={slide.href} class="carousel-cell mr-4 lg:w-1/2">
+        <Image
+          src={slide.imageSrc}
+          width={1600}
+          height={900}
+          format="jpeg"
+          alt="homepage banner images"
+          class="rounded shadow-md"
+        />
+      </a>
+    ))
+  }
+</div>
+
+<script>
+  import Flickity from "flickity";
+  new Flickity(".main-carousel", {
+    autoPlay: 3000,
+    wrapAround: true,
+  });
+</script>
