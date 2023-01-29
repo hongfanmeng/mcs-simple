@@ -1,7 +1,8 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import HomeSwiper from "../components/HomeSwiper.astro";
-import Card from "../components/Card.astro";
+import Card, { CardT } from "../components/Card.astro";
+import { Image } from "@astrojs/image/components";
 import { clsx } from "clsx";
 
 const slides = [
@@ -17,34 +18,95 @@ const cards = Array(3).fill({
   imageSrc: "/carousel/p1.jpg",
   desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eu magna mollis, scelerisque eros in, elementum ante. Suspendisse tincidunt consequat fringilla.",
   pubDate: new Date(),
-});
+}) as CardT[];
+
+const about = {
+  imageSrc: "/carousel/p2.jpg",
+  title: "About us",
+  content:
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu sem dolor. Nam scelerisque urna ipsum, eu feugiat turpis euismod vitae. Sed sed nisi ac arcu aliquet feugiat. Quisque iaculis dolor vel arcu finibus dapibus ac sed odio. Integer auctor lobortis libero. Donec convallis nulla in tristique porta. Aenean at elit id mauris auctor semper.",
+};
+
+const partners = [
+  { imageSrc: "/carousel/p1.jpg", href: "#" },
+  { imageSrc: "/carousel/p2.jpg", href: "#" },
+  { imageSrc: "/carousel/p3.jpg", href: "#" },
+  { imageSrc: "/carousel/p4.jpg", href: "#" },
+];
+
+const titleClass = clsx([
+  "font-semibold mb-2",
+  "text-xl md:text-2xl lg:text-3xl",
+]);
 ---
 
 <BaseLayout title="Home">
-  <HomeSwiper slides={slides} />
+  <div class="flex flex-col gap-10 lg:gap-16">
+    <HomeSwiper slides={slides} />
 
-  <div class="mt-10"></div>
+    <section
+      class={clsx([
+        "w-full max-w-5xl mx-auto px-5",
+        "flex flex-col lg:flex-row gap-5 lg:gap-10",
+      ])}
+    >
+      <div class="lg:w-0 flex-grow">
+        <h2 class={titleClass}>
+          {about.title}
+        </h2>
+        <p>{about.content}</p>
+      </div>
 
-  <h2 class="mx-auto w-fit font-semibold text-xl lg:text-3xl">News</h2>
+      <Image
+        class="lg:w-0 flex-grow rounded"
+        src={about.imageSrc}
+        alt="image of about us"
+        width={800}
+        height={450}
+        format="jpeg"
+      />
+    </section>
 
-  <div
-    class={clsx([
-      "grid grid-cols-1 lg:grid-cols-3 gap-5 lg:gap-10",
-      "mt-5  max-w-7xl w-full mx-auto ",
-    ])}
-  >
-    {
-      cards.map((card) => (
-        <Card
-          title={card.title}
-          href={card.href}
-          imageSrc={card.imageSrc}
-          desc={card.desc}
-          pubDate={card.pubDate}
-        />
-      ))
-    }
+    <section class="px-5">
+      <h2 class={clsx([titleClass, "mx-auto w-fit"])}>News</h2>
+
+      <div
+        class={clsx([
+          "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-10 mt-5",
+          "max-w-7xl w-full mx-auto",
+        ])}
+      >
+        {cards.map((card) => <Card card={card} />)}
+      </div>
+    </section>
+
+    <section class="px-5">
+      <h2 class={clsx([titleClass, "mx-auto w-fit"])}>Our Partners</h2>
+
+      <div
+        class={clsx([
+          "grid grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-10 mt-5",
+          "max-w-5xl w-full mx-auto",
+        ])}
+      >
+        {
+          partners.map((partner) => (
+            <a href={partner.href}>
+              <Image
+                src={partner.imageSrc}
+                width={400}
+                height={150}
+                format="jpeg"
+                fit="cover"
+                alt="partner"
+                class="shadow-md hover:scale-110 transition rounded"
+              />
+            </a>
+          ))
+        }
+      </div>
+    </section>
+
+    <div class="mt-20"></div>
   </div>
-
-  <div class="mt-10"></div>
 </BaseLayout>

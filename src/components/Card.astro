@@ -1,8 +1,9 @@
 ---
 import dayjs from "dayjs";
 import { Image } from "@astrojs/image/components";
+import clsx from "clsx";
 
-export interface Props {
+export interface CardT {
   title: string;
   href: string;
   imageSrc: string;
@@ -10,12 +11,21 @@ export interface Props {
   pubDate: Date;
 }
 
-const { href, title, imageSrc, desc, pubDate } = Astro.props;
+export interface Props {
+  card: CardT;
+}
+
+const { card } = Astro.props;
+const { title, href, imageSrc, desc, pubDate } = card;
 ---
 
 <a
   href={href}
-  class="transition-all duration-75 ease-in-out h-full block relative top-0 hover:-top-2 shadow-lg hover:shadow-xl bg-white rounded-xl overflow-hidden"
+  class={clsx([
+    "transition-all duration-75 ease-in-out",
+    "h-full block relative top-0 hover:-top-2",
+    "shadow-lg hover:shadow-xl bg-white rounded-xl overflow-hidden",
+  ])}
   data-test="article-card"
 >
   <Image
@@ -26,7 +36,7 @@ const { href, title, imageSrc, desc, pubDate } = Astro.props;
     format="jpeg"
     class="aspect-video w-full"
   />
-  <div class="py-6 px-8">
+  <div class="py-3 px-4 lg:py-6 lg:px-8">
     <h2 class="font-bold text-xl leading-tight truncate">
       {title}
     </h2>

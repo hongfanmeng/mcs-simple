@@ -10,7 +10,7 @@ const navLists = [
 ];
 ---
 
-<header class="h-16 max-w-7xl mx-auto w-full flex items-center">
+<header class="h-16 max-w-7xl mx-auto w-full flex items-center gap-5">
   <a href="/">
     <Image
       src="/mcs-logo.png"
@@ -22,7 +22,7 @@ const navLists = [
     />
   </a>
 
-  <ul class="flex">
+  <ul class="hidden lg:flex">
     {
       navLists.map((nav) => (
         <a href={nav.href}>
@@ -53,7 +53,7 @@ const navLists = [
     </svg>
   </button>
 
-  <button class="ml-4 hover:text-green-800">
+  <button class="hover:text-green-800">
     <svg
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
@@ -69,4 +69,6 @@ const navLists = [
       ></path>
     </svg>
   </button>
+
+  <div></div>
 </header>

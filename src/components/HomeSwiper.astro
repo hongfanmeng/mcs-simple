@@ -11,7 +11,7 @@ import "swiper/css/pagination";
 import { Image } from "@astrojs/image/components";
 ---
 
-<div class="swiper">
+<div class="swiper w-full h-fit">
   <div class="swiper-wrapper">
     {
       slides.map((slide) => (
@@ -22,7 +22,6 @@ import { Image } from "@astrojs/image/components";
             height={900}
             format="jpeg"
             alt="homepage banner images"
-            class="object-cover w-full rounded-xl"
           />
         </a>
       ))
