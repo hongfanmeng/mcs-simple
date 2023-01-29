@@ -1,0 +1,84 @@
+---
+interface Props {
+  slides: { imageSrc: string; href: string }[];
+}
+const { slides } = Astro.props;
+
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+
+import { Image } from "@astrojs/image/components";
+---
+
+<div class="swiper">
+  <div class="swiper-wrapper">
+    {
+      slides.map((slide) => (
+        <a href={slide.href} class="swiper-slide">
+          <Image
+            src={slide.imageSrc}
+            width={1600}
+            height={900}
+            format="jpeg"
+            alt="homepage banner images"
+            class="object-cover w-full rounded-xl"
+          />
+        </a>
+      ))
+    }
+  </div>
+
+  <div class="swiper-pagination"></div>
+
+  <div class="swiper-button-prev"></div>
+  <div class="swiper-button-next"></div>
+</div>
+
+<script>
+  import Swiper, { Navigation, Pagination, EffectCoverflow } from "swiper";
+  const swiper = new Swiper(".swiper", {
+    modules: [Navigation, Pagination, EffectCoverflow],
+    pagination: { el: ".swiper-pagination", clickable: true },
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+    loop: true,
+    autoplay: { delay: 2000 },
+    slidesPerView: 1,
+    effect: "coverflow",
+    coverflowEffect: {
+      rotate: 30,
+      slideShadows: true,
+    },
+    spaceBetween: 30,
+    centeredSlides: true,
+    breakpoints: {
+      1200: {
+        slidesPerView: 2,
+      },
+    },
+  });
+</script>
+
+<style>
+  .swiper-button-next,
+  .swiper-button-prev {
+    color: white;
+    padding: 1.5rem;
+    border-radius: 50%;
+    background-color: rgb(0, 0, 0, 0.5);
+  }
+
+  .swiper-button-prev::after,
+  .swiper-button-next::after {
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  * {
+    --swiper-theme-color: rgb(22 101 52);
+    --swiper-pagination-bullet-size: 0.75rem;
+  }
+</style>

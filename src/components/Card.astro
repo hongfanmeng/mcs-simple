@@ -1,0 +1,38 @@
+---
+import dayjs from "dayjs";
+import { Image } from "@astrojs/image/components";
+
+export interface Props {
+  title: string;
+  href: string;
+  imageSrc: string;
+  desc: string;
+  pubDate: Date;
+}
+
+const { href, title, imageSrc, desc, pubDate } = Astro.props;
+---
+
+<a
+  href={href}
+  class="transition-all duration-75 ease-in-out h-full block relative top-0 hover:-top-2 shadow-lg hover:shadow-xl bg-white rounded-xl overflow-hidden"
+  data-test="article-card"
+>
+  <Image
+    src={imageSrc}
+    alt={title}
+    width={800}
+    height={450}
+    format="jpeg"
+    class="aspect-video w-full"
+  />
+  <div class="py-6 px-8">
+    <h2 class="font-bold text-xl leading-tight truncate">
+      {title}
+    </h2>
+    <p class="text-gray-600 line-clamp-2">{desc}</p>
+    <p class="text-xs text-gray-600 mt-4 flex items-center">
+      {dayjs(pubDate).format("YYYY-MM-DD")}
+    </p>
+  </div>
+</a>

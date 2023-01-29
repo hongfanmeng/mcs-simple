@@ -1,0 +1,33 @@
+---
+import { Image } from "@astrojs/image/components";
+
+const navLists = [
+  { title: "News", href: "/news" },
+  { title: "About", href: "/about" },
+  { title: "Events", href: "/events" },
+  { title: "Contact us", href: "/contact" },
+];
+---
+
+<footer class="w-full h-56 bg-slate-800 p-5 lg:p-10">
+  <div class="w-full max-w-7xl mx-auto">
+    <ul class="flex gap-5">
+      {
+        navLists.map((nav) => (
+          <li>
+            <a
+              href={nav.href}
+              class="text-lg hover:underline underline-offset-1 p-2 text-white"
+            >
+              {nav.title}
+            </a>
+          </li>
+        ))
+      }
+      <li class="flex-grow"></li>
+      <li class="text-white">
+        Copyright © 2023 AABC, Macau. All Right Reserved.
+      </li>
+    </ul>
+  </div>
+</footer>

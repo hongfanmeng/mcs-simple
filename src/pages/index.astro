@@ -1,0 +1,50 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import HomeSwiper from "../components/HomeSwiper.astro";
+import Card from "../components/Card.astro";
+import { clsx } from "clsx";
+
+const slides = [
+  { imageSrc: "/carousel/p1.jpg", href: "#" },
+  { imageSrc: "/carousel/p2.jpg", href: "#" },
+  { imageSrc: "/carousel/p3.jpg", href: "#" },
+  { imageSrc: "/carousel/p4.jpg", href: "#" },
+];
+
+const cards = Array(3).fill({
+  title: "Duis feugiat dignissim condimentum.",
+  href: "#",
+  imageSrc: "/carousel/p1.jpg",
+  desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eu magna mollis, scelerisque eros in, elementum ante. Suspendisse tincidunt consequat fringilla.",
+  pubDate: new Date(),
+});
+---
+
+<BaseLayout title="Home">
+  <HomeSwiper slides={slides} />
+
+  <div class="mt-10"></div>
+
+  <h2 class="mx-auto w-fit font-semibold text-xl lg:text-3xl">News</h2>
+
+  <div
+    class={clsx([
+      "grid grid-cols-1 lg:grid-cols-3 gap-5 lg:gap-10",
+      "mt-5  max-w-7xl w-full mx-auto ",
+    ])}
+  >
+    {
+      cards.map((card) => (
+        <Card
+          title={card.title}
+          href={card.href}
+          imageSrc={card.imageSrc}
+          desc={card.desc}
+          pubDate={card.pubDate}
+        />
+      ))
+    }
+  </div>
+
+  <div class="mt-10"></div>
+</BaseLayout>

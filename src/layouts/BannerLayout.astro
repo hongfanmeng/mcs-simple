@@ -1,0 +1,17 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+export interface Props {
+  title: string;
+  bannerSrc: string;
+  bannerTitle: string;
+}
+
+const { title, bannerSrc, bannerTitle } = Astro.props;
+---
+
+<BaseLayout title={title}>
+  <div class="">
+    {bannerTitle}
+  </div>
+</BaseLayout>
