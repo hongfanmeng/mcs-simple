@@ -7,6 +7,7 @@ import { imageRespToUrl } from "@/utils";
 
 const resp = (await strapi.find("events", {
   populate: ["article", "article.cover"],
+  sort: ["article.publishDate:DESC", "order:ASC"],
 })) as EventEntityResponseCollection;
 const events = resp.data;
 
@@ -16,7 +17,7 @@ const cards = events.map((event) => {
     title: data.article.title,
     description: data.article.description,
     imageUrl: imageRespToUrl(data.article.cover),
-    link: `/events/${event.id}`,
+    link: `/events/${event.id}/`,
     publishDate: data.article.publishDate,
   } as CardBase;
 });

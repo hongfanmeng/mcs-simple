@@ -7,6 +7,7 @@ import { imageRespToUrl } from "@/utils";
 
 const resp = (await strapi.find("news-list", {
   populate: ["article", "article.cover"],
+  sort: ["article.publishDate:DESC", "order:ASC"],
 })) as NewsEntityResponseCollection;
 const newsList = resp.data;
 
@@ -16,7 +17,7 @@ const cards = newsList.map((news) => {
     title: data.article.title,
     description: data.article.description,
     imageUrl: imageRespToUrl(data.article.cover),
-    link: `/news/${news.id}`,
+    link: `/news/${news.id}/`,
     publishDate: data.article.publishDate,
   } as CardBase;
 });

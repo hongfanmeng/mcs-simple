@@ -29,7 +29,7 @@ const newsList = newsResp.data;
 const newsCards = newsList.map((news) => {
   return articleToCard(
     news.attributes!.article,
-    `/news/${news.id}`
+    `/news/${news.id}/`
   ) as CardBase;
 });
 
@@ -51,7 +51,7 @@ const events = eventsResp.data;
 const eventCards = events.map((event) => {
   return articleToCard(
     event.attributes!.article,
-    `/events/${event.id}`
+    `/events/${event.id}/`
   ) as CardBase;
 });
 
