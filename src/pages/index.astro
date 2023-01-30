@@ -89,8 +89,8 @@ const titleClasses = [
         class="w-full md:w-0 flex-grow rounded"
         src={imageRespToUrl(about.image)}
         alt="image of about us"
-        width={800}
-        height={450}
+        width={640}
+        height={360}
         format="webp"
       />
     </section>
@@ -136,12 +136,13 @@ const titleClasses = [
               <a href={partner?.link} class="w-full">
                 <Image
                   src={imageRespToUrl(partner?.image)}
-                  width={400}
-                  height={150}
+                  width={250}
+                  height={100}
                   format="webp"
-                  fit="cover"
+                  fit="contain"
                   alt="partner"
-                  class="shadow-md hover:scale-110 transition rounded w-full h-auto"
+                  background="white"
+                  class="shadow-md hover:scale-110 transition rounded w-full h-auto border-gray-100 border"
                 />
               </a>
             ))}
