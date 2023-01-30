@@ -1,14 +1,27 @@
 ---
 import Card, { CardBase } from "../components/Card.astro";
 import BannerLayout from "../layouts/BannerLayout.astro";
+import strapi from "../api/strapi";
+import type { NewsEntityResponseCollection } from "../models/types";
+import { imageRespToUrl } from "../utils";
 
-const news = Array(6).fill({
-  title: "Duis feugiat dignissim condimentum.",
-  href: "#",
-  imageSrc: "/carousel/p1.jpg",
-  desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eu magna mollis, scelerisque eros in, elementum ante. Suspendisse tincidunt consequat fringilla.",
-  pubDate: new Date(),
-}) as CardBase[];
+const resp = (await strapi.find("news-list", {
+  populate: ["article", "article.cover"],
+})) as NewsEntityResponseCollection;
+const newsList = resp.data;
+
+const cards = newsList.map((news) => {
+  const data = news.attributes!;
+  return {
+    title: data.article.title,
+    description: data.article.description,
+    imageUrl: imageRespToUrl(data.article.cover),
+    link: "#",
+    publishDate: data.article.publishDate,
+  } as CardBase;
+});
+
+// console.log(cards);
 ---
 
 <BannerLayout title="News" bannerTitle="News">
@@ -19,7 +32,7 @@ const news = Array(6).fill({
       "gap-5 lg:gap-10 px-5",
     ]}
   >
-    {news.map((news) => <Card card={news} />)}
+    {cards.map((card) => <Card card={card} />)}
   </div>
 
   <div class="mt-10"></div>

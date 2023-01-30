@@ -1,28 +1,16 @@
 ---
 import BannerLayout from "../layouts/BannerLayout.astro";
 import { Image } from "@astrojs/image/components";
+import strapi from "../api/strapi";
+import type { ContactEntityResponse } from "../models/types";
+import { imageRespToUrl } from "../utils";
 
-const contact = {
-  info: [
-    {
-      title: "Email",
-      content: "info@gmail.com",
-    },
-    {
-      title: "Telephone",
-      content: "+90 555 555 55 55",
-    },
-    {
-      title: "Fax",
-      content: "+90 555 555 55 55",
-    },
-    {
-      title: "Address",
-      content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    },
-  ],
-  imageSrc: "/carousel/p3.jpg",
-};
+const resp = (await strapi.find("contact", {
+  populate: ["info", "image"],
+})) as ContactEntityResponse;
+const contact = resp?.data?.attributes!;
+
+// console.log(contact);
 ---
 
 <BannerLayout title="About us" bannerTitle="About us">
@@ -35,27 +23,26 @@ const contact = {
   >
     <Image
       class="w-full md:w-0 flex-grow rounded"
-      src={contact.imageSrc}
+      src={imageRespToUrl(contact.image)}
       format="webp"
       alt="image of contact us"
       width={800}
       height={450}
       format="webp"
     />
-
     <div class="md:w-0 flex-grow">
       <table>
         {
-          contact.info.map((info) => (
+          contact.info!.map((info) => (
             <tr>
               <td class="text-lg py-2 font-semibold align-top text-right">
-                {info.title}
+                {info?.name}
               </td>
               <td
                 class="text-lg py-2 pl-4 lg:pl-8 text-justify"
                 style="hyphens:auto"
               >
-                {info.content}
+                {info?.value}
               </td>
             </tr>
           ))
@@ -66,9 +53,8 @@ const contact = {
 
   <section class="mt-10 px-5">
     <iframe
-      class="max-w-7xl w-full mx-auto aspect-[16/9]"
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1847.5991638314445!2d113.57228640819253!3d22.156521430497598!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x34016ff7baa5f789%3A0xeedea94ad3ce828d!2sMacau%20International%20Airport!5e0!3m2!1sen!2s!4v1674978117086!5m2!1sen!2s"
-      style="border:0;"
+      class="max-w-7xl w-full mx-auto aspect-[16/9] border-0"
+      src={contact.googleMapAddr}
       allowfullscreen=""
       loading="lazy"
       referrerpolicy="no-referrer-when-downgrade"></iframe>

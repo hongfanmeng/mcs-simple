@@ -4,10 +4,10 @@ import { Image } from "@astrojs/image/components";
 
 export interface CardBase {
   title: string;
-  href: string;
-  imageSrc: string;
-  desc: string;
-  pubDate: Date;
+  link: string;
+  description: string;
+  publishDate: Date;
+  imageUrl: string | undefined;
 }
 
 export interface Props {
@@ -15,11 +15,11 @@ export interface Props {
 }
 
 const { card } = Astro.props;
-const { title, href, imageSrc, desc, pubDate } = card;
+const { title, link, description, publishDate, imageUrl } = card;
 ---
 
 <a
-  href={href}
+  href={link}
   class:list={[
     "transition-all duration-75 ease-in-out",
     "h-full block relative top-0 hover:-top-2",
@@ -28,7 +28,7 @@ const { title, href, imageSrc, desc, pubDate } = card;
   data-test="article-card"
 >
   <Image
-    src={imageSrc}
+    src={imageUrl ?? "/no-image.jpg"}
     alt={title}
     width={800}
     height={450}
@@ -39,9 +39,9 @@ const { title, href, imageSrc, desc, pubDate } = card;
     <h2 class="font-bold text-xl leading-tight truncate">
       {title}
     </h2>
-    <p class="text-gray-600 line-clamp-2 text-justify">{desc}</p>
+    <p class="text-gray-600 line-clamp-2 text-justify">{description}</p>
     <p class="text-xs text-gray-600 mt-4 flex items-center">
-      {dayjs(pubDate).format("YYYY-MM-DD")}
+      {dayjs(publishDate).format("YYYY-MM-DD")}
     </p>
   </div>
 </a>

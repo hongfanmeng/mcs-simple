@@ -3,43 +3,58 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import HomeSlider from "../components/HomeSlider.astro";
 import Card, { CardBase } from "../components/Card.astro";
 import { Image } from "@astrojs/image/components";
+import strapi from "../api/strapi";
+import type {
+  AboutEntityResponse,
+  EventEntityResponseCollection,
+  NewsEntityResponseCollection,
+} from "../models/types";
+import { articleToCard, imageRespToUrl } from "../utils";
 
-const slides = [
-  { imageSrc: "/carousel/p1.jpg", href: "#" },
-  { imageSrc: "/carousel/p2.jpg", href: "#" },
-  { imageSrc: "/carousel/p3.jpg", href: "#" },
-  { imageSrc: "/carousel/p4.jpg", href: "#" },
-];
+const newsResp = (await strapi.find("news-list", {
+  populate: ["article", "article.cover"],
+  filters: {
+    isTop: {
+      $eq: true,
+    },
+  },
+  sort: ["article.publishDate:DESC", "order:ASC"],
+  pagination: {
+    start: 0,
+    limit: 3,
+  },
+})) as NewsEntityResponseCollection;
+const newsList = newsResp.data;
 
-const news = Array(3).fill({
-  title: "Duis feugiat dignissim condimentum.",
-  href: "#",
-  imageSrc: "/carousel/p1.jpg",
-  desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eu magna mollis, scelerisque eros in, elementum ante. Suspendisse tincidunt consequat fringilla.",
-  pubDate: new Date(),
-}) as CardBase[];
+const newsCards = newsList.map((news) => {
+  return articleToCard(news.attributes!.article, "#") as CardBase;
+});
 
-const events = Array(3).fill({
-  title: "Duis feugiat dignissim condimentum.",
-  href: "#",
-  imageSrc: "/carousel/p2.jpg",
-  desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eu magna mollis, scelerisque eros in, elementum ante. Suspendisse tincidunt consequat fringilla.",
-  pubDate: new Date(),
-}) as CardBase[];
+const eventsResp = (await strapi.find("events", {
+  populate: ["article", "article.cover"],
+  filters: {
+    isTop: {
+      $eq: true,
+    },
+  },
+  sort: ["article.publishDate:DESC", "order:ASC"],
+  pagination: {
+    start: 0,
+    limit: 3,
+  },
+})) as EventEntityResponseCollection;
+const events = eventsResp.data;
 
-const about = {
-  imageSrc: "/carousel/p2.jpg",
-  title: "About us",
-  content:
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu sem dolor. Nam scelerisque urna ipsum, eu feugiat turpis euismod vitae. Sed sed nisi ac arcu aliquet feugiat. Quisque iaculis dolor vel arcu finibus dapibus ac sed odio. Integer auctor lobortis libero. Donec convallis nulla in tristique porta. Aenean at elit id mauris auctor semper.",
-};
+const eventCards = events.map((event) => {
+  return articleToCard(event.attributes!.article, "#") as CardBase;
+});
 
-const partners = [
-  { imageSrc: "/carousel/p1.jpg", href: "#" },
-  { imageSrc: "/carousel/p2.jpg", href: "#" },
-  { imageSrc: "/carousel/p3.jpg", href: "#" },
-  { imageSrc: "/carousel/p4.jpg", href: "#" },
-];
+const slides = newsCards.concat(eventCards);
+
+const aboutResp = (await strapi.find("about", {
+  populate: ["image", "partners.image"],
+})) as AboutEntityResponse;
+const about = aboutResp.data?.attributes!;
 
 const titleClasses = [
   "font-semibold mb-2 mx-auto w-fit",
@@ -66,7 +81,7 @@ const titleClasses = [
 
       <Image
         class="w-full md:w-0 flex-grow rounded"
-        src={about.imageSrc}
+        src={imageRespToUrl(about.image)}
         alt="image of about us"
         width={800}
         height={450}
@@ -83,7 +98,7 @@ const titleClasses = [
           "max-w-7xl w-full mx-auto",
         ]}
       >
-        {news.map((card) => <Card card={card} />)}
+        {newsCards.map((card) => <Card card={card} />)}
       </div>
     </section>
 
@@ -96,36 +111,38 @@ const titleClasses = [
           "max-w-7xl w-full mx-auto",
         ]}
       >
-        {events.map((card) => <Card card={card} />)}
+        {eventCards.map((card) => <Card card={card} />)}
       </div>
     </section>
 
-    <section class="px-5">
-      <h2 class:list={titleClasses}>Our Partners</h2>
+    {
+      about.partners && (
+        <section class="px-5">
+          <h2 class:list={titleClasses}>Our Partners</h2>
 
-      <div
-        class:list={[
-          "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-10 mt-5",
-          "max-w-5xl w-full mx-auto",
-        ]}
-      >
-        {
-          partners.map((partner) => (
-            <a href={partner.href} class="w-full">
-              <Image
-                src={partner.imageSrc}
-                width={400}
-                height={150}
-                format="webp"
-                fit="cover"
-                alt="partner"
-                class="shadow-md hover:scale-110 transition rounded w-full h-auto"
-              />
-            </a>
-          ))
-        }
-      </div>
-    </section>
+          <div
+            class:list={[
+              "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-10 mt-5",
+              "max-w-5xl w-full mx-auto",
+            ]}
+          >
+            {about.partners.map((partner) => (
+              <a href={partner?.link} class="w-full">
+                <Image
+                  src={imageRespToUrl(partner?.image)}
+                  width={400}
+                  height={150}
+                  format="webp"
+                  fit="cover"
+                  alt="partner"
+                  class="shadow-md hover:scale-110 transition rounded w-full h-auto"
+                />
+              </a>
+            ))}
+          </div>
+        </section>
+      )
+    }
 
     <div class="mt-20"></div>
   </div>
