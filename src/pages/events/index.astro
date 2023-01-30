@@ -1,17 +1,17 @@
 ---
-import Card, { CardBase } from "../components/Card.astro";
-import BannerLayout from "../layouts/BannerLayout.astro";
-import strapi from "../api/strapi";
-import type { NewsEntityResponseCollection } from "../models/types";
-import { imageRespToUrl } from "../utils";
+import Card, { CardBase } from "@/components/Card.astro";
+import BannerLayout from "@/layouts/BannerLayout.astro";
+import strapi from "@/api/strapi";
+import type { EventEntityResponseCollection } from "@/models/types";
+import { imageRespToUrl } from "@/utils";
 
-const resp = (await strapi.find("news-list", {
+const resp = (await strapi.find("events", {
   populate: ["article", "article.cover"],
-})) as NewsEntityResponseCollection;
-const newsList = resp.data;
+})) as EventEntityResponseCollection;
+const events = resp.data;
 
-const cards = newsList.map((news) => {
-  const data = news.attributes!;
+const cards = events.map((event) => {
+  const data = event.attributes!;
   return {
     title: data.article.title,
     description: data.article.description,
@@ -24,7 +24,7 @@ const cards = newsList.map((news) => {
 // console.log(cards);
 ---
 
-<BannerLayout title="News" bannerTitle="News">
+<BannerLayout title="Events" bannerTitle="Events">
   <div
     class:list={[
       "mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3",

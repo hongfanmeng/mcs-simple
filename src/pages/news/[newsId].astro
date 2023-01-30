@@ -1,0 +1,39 @@
+---
+import BannerLayout from "@/layouts/BannerLayout.astro";
+import strapi from "@/api/strapi";
+import type {
+  NewsEntityResponse,
+  NewsEntityResponseCollection,
+} from "@/models/types";
+import { imageRespToUrl } from "@/utils";
+import showdown from "showdown";
+
+const { newsId } = Astro.params;
+const resp = (await strapi.findOne("news-list", newsId!, {
+  populate: ["article", "article.cover"],
+})) as NewsEntityResponse;
+const news = resp.data?.attributes!;
+
+export async function getStaticPaths() {
+  const resp = (await strapi.find("news-list")) as NewsEntityResponseCollection;
+  const newsList = resp.data;
+  return newsList.map((news) => {
+    return { params: { newsId: news.id } };
+  });
+}
+
+console.log(news);
+---
+
+<BannerLayout title="News" bannerTitle="News">
+  <div
+    class:list={[
+      "w-full max-w-7xl mx-auto p-4 lg:p-10",
+      "flex flex-col gap-4 items-center",
+    ]}
+  >
+    <h2 class="font-semibold text-3xl">{news.article?.title}</h2>
+    <span class="text-gray-600">{news.article?.publishDate}</span>
+    <div class="text-justify text-lg" set:html={news.article?.content} />
+  </div>
+</BannerLayout>

@@ -1,0 +1,18 @@
+---
+import BannerLayout from "@/layouts/BannerLayout.astro";
+import strapi from "@/api/strapi";
+import type { EventEntityResponse } from "@/models/types";
+import { imageRespToUrl } from "@/utils";
+
+const { eventId } = Astro.params;
+const resp = (await strapi.findOne("events", eventId!, {
+  populate: ["article", "article.cover"],
+})) as EventEntityResponse;
+const event = resp.data;
+
+console.log(event);
+---
+
+<BannerLayout title="Events" bannerTitle="Events">
+  {}
+</BannerLayout>

@@ -1,9 +1,9 @@
 ---
-import BannerLayout from "../layouts/BannerLayout.astro";
+import BannerLayout from "@/layouts/BannerLayout.astro";
 import { Image } from "@astrojs/image/components";
-import strapi from "../api/strapi";
-import type { AboutEntityResponse } from "../models/types";
-import { imageRespToUrl } from "../utils";
+import strapi from "@/api/strapi";
+import type { AboutEntityResponse } from "@/models/types";
+import { imageRespToUrl } from "@/utils";
 
 const resp = (await strapi.find("about", {
   populate: ["image", "partners.image"],

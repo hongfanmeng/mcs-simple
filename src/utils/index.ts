@@ -2,8 +2,8 @@ import type {
   ComponentGeneralArticle,
   Maybe,
   UploadFileEntityResponse,
-} from "../models/types";
-import type { CardBase } from "../components/Card.astro";
+} from "@/models/types";
+import type { CardBase } from "@/components/Card.astro";
 
 const imageRespToUrl = (resp?: Maybe<UploadFileEntityResponse>) => {
   if (resp) return import.meta.env.STRAPI_URL + resp.data?.attributes?.url;

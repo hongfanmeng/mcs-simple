@@ -1,15 +1,15 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
-import HomeSlider from "../components/HomeSlider.astro";
-import Card, { CardBase } from "../components/Card.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import HomeSlider from "@/components/HomeSlider.astro";
+import Card, { CardBase } from "@/components/Card.astro";
 import { Image } from "@astrojs/image/components";
-import strapi from "../api/strapi";
+import strapi from "@/api/strapi";
 import type {
   AboutEntityResponse,
   EventEntityResponseCollection,
   NewsEntityResponseCollection,
-} from "../models/types";
-import { articleToCard, imageRespToUrl } from "../utils";
+} from "@/models/types";
+import { articleToCard, imageRespToUrl } from "@/utils";
 
 const newsResp = (await strapi.find("news-list", {
   populate: ["article", "article.cover"],
@@ -27,7 +27,10 @@ const newsResp = (await strapi.find("news-list", {
 const newsList = newsResp.data;
 
 const newsCards = newsList.map((news) => {
-  return articleToCard(news.attributes!.article, "#") as CardBase;
+  return articleToCard(
+    news.attributes!.article,
+    `/news/${news.id}`
+  ) as CardBase;
 });
 
 const eventsResp = (await strapi.find("events", {
@@ -46,7 +49,10 @@ const eventsResp = (await strapi.find("events", {
 const events = eventsResp.data;
 
 const eventCards = events.map((event) => {
-  return articleToCard(event.attributes!.article, "#") as CardBase;
+  return articleToCard(
+    event.attributes!.article,
+    `/events/${event.id}`
+  ) as CardBase;
 });
 
 const slides = newsCards.concat(eventCards);
