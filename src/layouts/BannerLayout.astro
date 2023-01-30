@@ -1,5 +1,6 @@
 ---
 import strapi from "@/api/strapi";
+import ThumbImage from "@/components/ThumbImage.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import type { PageEntityResponseCollection } from "@/models/types";
 import { imageRespToUrl } from "@/utils";
@@ -20,20 +21,21 @@ const resp = (await strapi.find("pages", {
 })) as PageEntityResponseCollection;
 const page = resp.data![0]?.attributes;
 
-console.log(page);
+// console.log(page);
 ---
 
 <BaseLayout title={page?.title ?? ""}>
-  <div class="h-80 bg-green-600 flex items-center justify-center relative">
+  <div class="h-80 bg-gray-200 flex items-center justify-center relative">
     {
       page?.banner?.data && (
-        <Image
+        <ThumbImage
           src={imageRespToUrl(page.banner)}
           width={2000}
           height={400}
           format="webp"
           alt={page.title}
-          class="object-cover w-full h-full"
+          classes="w-full h-full"
+          imageClasses="object-cover h-full"
         />
       )
     }

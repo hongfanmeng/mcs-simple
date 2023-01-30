@@ -7,6 +7,7 @@ const { slides } = Astro.props;
 import "flickity/css/flickity.css";
 import { Image } from "@astrojs/image/components";
 import type { CardBase } from "./Card.astro";
+import ThumbImage from "./ThumbImage.astro";
 ---
 
 <div class="main-carousel">
@@ -15,13 +16,13 @@ import type { CardBase } from "./Card.astro";
       (slide) =>
         slide.imageUrl && (
           <a href={slide.link} class="carousel-cell mr-4 lg:w-1/2">
-            <Image
+            <ThumbImage
               src={slide.imageUrl}
               width={1200}
               height={675}
               format="webp"
-              alt="homepage banner images"
-              class="rounded shadow-md w-full h-auto"
+              alt={slide.title}
+              classes="rounded shadow-md w-full aspect-video"
             />
             <div class="absolute inset-0 flex items-center justify-center">
               <div class="w-full h-full bg-black opacity-30 absolute" />

@@ -4,6 +4,7 @@ import { Image } from "@astrojs/image/components";
 import strapi from "@/api/strapi";
 import type { ContactEntityResponse } from "@/models/types";
 import { imageRespToUrl } from "@/utils";
+import ThumbImage from "@/components/ThumbImage.astro";
 
 const resp = (await strapi.find("contact", {
   populate: ["info", "image"],
@@ -21,8 +22,8 @@ const contact = resp?.data?.attributes!;
       "mt-10",
     ]}
   >
-    <Image
-      class="w-full md:w-0 flex-grow rounded"
+    <ThumbImage
+      classes="w-full md:w-0 flex-grow rounded"
       src={imageRespToUrl(contact.image)}
       format="webp"
       alt="image of contact us"

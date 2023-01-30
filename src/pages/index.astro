@@ -10,6 +10,7 @@ import type {
   NewsEntityResponseCollection,
 } from "@/models/types";
 import { articleToCard, imageRespToUrl } from "@/utils";
+import ThumbImage from "@/components/ThumbImage.astro";
 
 const newsResp = (await strapi.find("news-list", {
   populate: ["article", "article.cover"],
@@ -75,18 +76,18 @@ const titleClasses = [
     <section
       class:list={[
         "w-full max-w-5xl mx-auto px-5",
-        "flex flex-col md:flex-row gap-5 md:gap-10",
+        "grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-10",
       ]}
     >
-      <div class="md:w-0 flex-grow">
+      <div>
         <h2 class:list={[titleClasses, "md:mx-0"]}>
           {about.title}
         </h2>
         <p style="hyphens:auto" class="text-justify">{about.content}</p>
       </div>
 
-      <Image
-        class="w-full md:w-0 flex-grow rounded"
+      <ThumbImage
+        classes="w-full rounded aspect-video"
         src={imageRespToUrl(about.image)}
         alt="image of about us"
         width={640}
@@ -134,7 +135,7 @@ const titleClasses = [
           >
             {about.partners.map((partner) => (
               <a href={partner?.link} class="w-full">
-                <Image
+                <ThumbImage
                   src={imageRespToUrl(partner?.image)}
                   width={250}
                   height={100}
@@ -142,7 +143,7 @@ const titleClasses = [
                   fit="contain"
                   alt="partner"
                   background="white"
-                  class="shadow-md hover:scale-110 transition rounded w-full h-auto border-gray-100 border"
+                  class="shadow-md hover:scale-110 transition rounded w-full aspect-[5/2] border-gray-100 border"
                 />
               </a>
             ))}

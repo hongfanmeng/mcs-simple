@@ -4,6 +4,7 @@ import { Image } from "@astrojs/image/components";
 import strapi from "@/api/strapi";
 import type { AboutEntityResponse } from "@/models/types";
 import { imageRespToUrl } from "@/utils";
+import ThumbImage from "@/components/ThumbImage.astro";
 
 const resp = (await strapi.find("about", {
   populate: ["image", "partners.image"],
@@ -32,8 +33,8 @@ const titleClasses = [
       <p style="hyphens:auto" class="text-justify">{about.content}</p>
     </div>
 
-    <Image
-      class="w-full md:w-0 flex-grow rounded"
+    <ThumbImage
+      classes="w-full md:w-0 flex-grow rounded"
       src={imageRespToUrl(about.image)}
       alt="image of about us"
       width={640}
@@ -56,15 +57,15 @@ const titleClasses = [
         >
           {about.partners.map((partner) => (
             <a href={partner?.link} class="w-full">
-              <Image
+              <ThumbImage
                 src={imageRespToUrl(partner?.image)}
                 width={250}
                 height={100}
                 format="webp"
+                alt={partner?.title ?? ""}
+                classes="shadow-md hover:scale-110 transition rounded w-full aspect-[5/2] border-gray-100 border"
                 fit="contain"
-                alt="partner"
                 background="white"
-                class="shadow-md hover:scale-110 transition rounded w-full h-auto border-gray-100 border"
               />
             </a>
           ))}
