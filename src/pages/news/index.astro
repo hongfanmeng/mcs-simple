@@ -16,7 +16,7 @@ const cards = newsList.map((news) => {
     title: data.article.title,
     description: data.article.description,
     imageUrl: imageRespToUrl(data.article.cover),
-    link: "#",
+    link: `/news/${news.id}`,
     publishDate: data.article.publishDate,
   } as CardBase;
 });

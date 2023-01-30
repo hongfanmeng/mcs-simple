@@ -22,7 +22,10 @@ export async function getStaticPaths() {
   });
 }
 
-console.log(news);
+const converter = new showdown.Converter();
+const newsHtml = converter.makeHtml(news.article?.content || "");
+
+// console.log(news);
 ---
 
 <BannerLayout title="News" bannerTitle="News">
@@ -34,6 +37,7 @@ console.log(news);
   >
     <h2 class="font-semibold text-3xl">{news.article?.title}</h2>
     <span class="text-gray-600">{news.article?.publishDate}</span>
-    <div class="text-justify text-lg" set:html={news.article?.content} />
+    <hr class="w-full" />
+    <div class="text-justify text-lg flex flex-col gap-4" set:html={newsHtml} />
   </div>
 </BannerLayout>

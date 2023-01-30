@@ -16,7 +16,7 @@ const cards = events.map((event) => {
     title: data.article.title,
     description: data.article.description,
     imageUrl: imageRespToUrl(data.article.cover),
-    link: "#",
+    link: `/events/${event.id}`,
     publishDate: data.article.publishDate,
   } as CardBase;
 });

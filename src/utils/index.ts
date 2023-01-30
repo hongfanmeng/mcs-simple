@@ -6,7 +6,7 @@ import type {
 import type { CardBase } from "@/components/Card.astro";
 
 const imageRespToUrl = (resp?: Maybe<UploadFileEntityResponse>) => {
-  if (resp) return import.meta.env.STRAPI_URL + resp.data?.attributes?.url;
+  if (resp) return resp.data?.attributes?.url;
   else return "/no-image.jpg";
 };
 
