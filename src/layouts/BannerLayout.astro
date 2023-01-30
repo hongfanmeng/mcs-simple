@@ -1,32 +1,45 @@
 ---
+import strapi from "@/api/strapi";
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import type { PageEntityResponseCollection } from "@/models/types";
+import { imageRespToUrl } from "@/utils";
 import { Image } from "@astrojs/image/components";
 
 export interface Props {
-  title: string;
-  bannerSrc?: string;
-  bannerTitle: string;
+  name: string;
 }
+const { name } = Astro.props;
 
-const { title, bannerSrc, bannerTitle } = Astro.props;
+const resp = (await strapi.find("pages", {
+  filters: {
+    name: {
+      $eq: name,
+    },
+  },
+  populate: ["banner"],
+})) as PageEntityResponseCollection;
+const page = resp.data![0]?.attributes;
+
+console.log(page);
 ---
 
-<BaseLayout title={title}>
+<BaseLayout title={page?.title ?? ""}>
   <div class="h-80 bg-green-600 flex items-center justify-center relative">
     {
-      bannerSrc && (
+      page?.banner?.data && (
         <Image
-          src={bannerSrc}
-          width={1600}
-          height={450}
+          src={imageRespToUrl(page.banner)}
+          width={2000}
+          height={400}
           format="webp"
-          alt={bannerTitle}
+          alt={page.title}
           class="object-cover w-full h-full"
         />
       )
     }
-    <h1 class="absolute text-white text-4xl font-bold">
-      {bannerTitle}
+    <div class="absolute inset-0 bg-black opacity-20"></div>
+    <h1 class="absolute text-white text-5xl font-black">
+      {page?.title}
     </h1>
   </div>
   <slot />
