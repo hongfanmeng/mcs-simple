@@ -28,13 +28,11 @@ const cards = events.map((event) => {
 <BannerLayout title="Events" bannerTitle="Events">
   <div
     class:list={[
-      "mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3",
+      "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3",
       "w-full max-w-7xl mx-auto",
-      "gap-5 lg:gap-10 px-5",
+      "gap-5 lg:gap-10 p-5 lg:p-10",
     ]}
   >
     {cards.map((card) => <Card card={card} />)}
   </div>
-
-  <div class="mt-10"></div>
 </BannerLayout>
