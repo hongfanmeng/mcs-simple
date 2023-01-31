@@ -5,7 +5,7 @@ interface Props {
 const { slides } = Astro.props;
 
 import "flickity/css/flickity.css";
-import type { CardBase } from "./Card.astro";
+import type { CardBase } from "@/components/base/Card.astro";
 import { Picture } from "astro-imagetools/components";
 ---
 
@@ -14,10 +14,7 @@ import { Picture } from "astro-imagetools/components";
     slides.map(
       (slide) =>
         slide.imageUrl && (
-          <a
-            href={slide.link}
-            class="carousel-cell mr-4 lg:w-1/2 rounded-md shadow-md relative"
-          >
+          <a href={slide.link} class="carousel-cell lg:mx-2 lg:w-1/2 relative">
             <Picture
               src={slide.imageUrl}
               breakpoints={[600, 1200]}
@@ -26,7 +23,7 @@ import { Picture } from "astro-imagetools/components";
               alt={slide.title}
               attributes={{
                 img: {
-                  class: "rounded",
+                  class: "lg:rounded-md",
                 },
                 picture: {
                   class: "aspect-video",
@@ -35,7 +32,7 @@ import { Picture } from "astro-imagetools/components";
             />
 
             <div class="absolute inset-0 flex items-center justify-center z-10">
-              <div class="w-full h-full bg-black opacity-30 absolute rounded" />
+              <div class="w-full h-full bg-black opacity-30 absolute lg:rounded-md" />
               <div
                 class:list={[
                   "slide-intro opacity-0 transition duration-300",
@@ -50,8 +47,8 @@ import { Picture } from "astro-imagetools/components";
                 </p>
                 <button
                   class:list={[
-                    "border-white border-2 rounded text-white font-semibold",
-                    "lg:text-xl px-2 lg:px-4 py-1 lg:py-2",
+                    "border-white border-2 text-white font-semibold",
+                    "lg:text-xl px-2 lg:px-4 py-1 lg:py-2 rounded",
                     "bg-black bg-opacity-30",
                   ]}
                 >
@@ -87,6 +84,27 @@ import { Picture } from "astro-imagetools/components";
   @media (min-width: 1024px) {
     .main-carousel {
       height: calc(50vw / 16 * 9 - 0.4rem);
+    }
+    .flickity-button {
+      width: 44px;
+      height: 44px;
+    }
+  }
+</style>
+
+<style is:global>
+  .flickity-button:focus,
+  .flickity-page-dot:focus {
+    box-shadow: none;
+  }
+  .flickity-button {
+    width: 32px !important;
+    height: 32px !important;
+  }
+  @media (min-width: 1024px) {
+    .flickity-button {
+      width: 48px !important;
+      height: 48px !important;
     }
   }
 </style>

@@ -3,7 +3,7 @@ import type {
   Maybe,
   UploadFileEntityResponse,
 } from "@/models/types";
-import type { CardBase } from "@/components/Card.astro";
+import type { CardBase } from "@/components/base/Card.astro";
 
 const imageRespToUrl = (resp?: Maybe<UploadFileEntityResponse>) => {
   if (resp) return resp.data?.attributes?.url!;

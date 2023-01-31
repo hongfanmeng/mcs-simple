@@ -1,0 +1,49 @@
+---
+import type { About } from "@/models/types";
+import { Picture } from "astro-imagetools/components";
+import { imageRespToUrl } from "@/utils";
+
+interface Props {
+  about: About;
+}
+
+const { about } = Astro.props;
+
+const titleClasses = [
+  "font-semibold mb-2 mx-auto w-fit",
+  "text-xl md:text-2xl lg:text-3xl",
+];
+---
+
+<section class="px-5">
+  <h2 class:list={titleClasses}>Our Partners</h2>
+
+  <div
+    class:list={[
+      "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-10 mt-5",
+      "max-w-5xl w-full mx-auto",
+    ]}
+  >
+    {
+      about.partners.map((partner) => (
+        <a href={partner?.link} class="w-full">
+          <Picture
+            src={imageRespToUrl(partner?.image)}
+            width={320}
+            height={80}
+            format="webp"
+            fit="contain"
+            background="rgba(0,0,0,0)"
+            alt={partner?.title ?? ""}
+            attributes={{
+              picture: {
+                class:
+                  "shadow-md hover:scale-110 transition rounded border-gray-100 border",
+              },
+            }}
+          />
+        </a>
+      ))
+    }
+  </div>
+</section>

@@ -1,15 +1,16 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import HomeSlider from "@/components/HomeSlider.astro";
-import Card, { CardBase } from "@/components/Card.astro";
+import Slider from "@/components/home/Slider.astro";
+import Card, { CardBase } from "@/components/base/Card.astro";
 import strapi from "@/api/strapi";
 import type {
   AboutEntityResponse,
   EventEntityResponseCollection,
   NewsEntityResponseCollection,
 } from "@/models/types";
-import { articleToCard, imageRespToUrl } from "@/utils";
-import { Picture } from "astro-imagetools/components";
+import { articleToCard } from "@/utils";
+import AboutTextSection from "@/components/about/TextSection.astro";
+import AboutPartnerCards from "@/components/about/PartnerCards.astro";
 
 const newsResp = (await strapi.find("news-list", {
   populate: ["article", "article.cover"],
@@ -70,34 +71,9 @@ const titleClasses = [
 
 <BaseLayout title="Home" description={about?.content}>
   <div class="flex flex-col gap-10 lg:gap-16">
-    <HomeSlider slides={slides} />
+    <Slider slides={slides} />
 
-    <section
-      class:list={[
-        "w-full max-w-5xl mx-auto px-5",
-        "grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-10",
-      ]}
-    >
-      <div>
-        <h2 class:list={[titleClasses, "md:mx-0"]}>
-          {about.title}
-        </h2>
-        <p style="hyphens:auto" class="text-justify">{about.content}</p>
-      </div>
-
-      <Picture
-        attributes={{
-          img: {
-            class: "rounded",
-          },
-        }}
-        src={imageRespToUrl(about.image)}
-        alt="image of about us"
-        width={640}
-        aspect={16 / 9}
-        format="webp"
-      />
-    </section>
+    <AboutTextSection about={about} />
 
     <section class="px-5">
       <h2 class:list={titleClasses}>News</h2>
@@ -125,40 +101,7 @@ const titleClasses = [
       </div>
     </section>
 
-    {
-      about.partners && (
-        <section class="px-5">
-          <h2 class:list={titleClasses}>Our Partners</h2>
-
-          <div
-            class:list={[
-              "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-10 mt-5",
-              "max-w-5xl w-full mx-auto",
-            ]}
-          >
-            {about.partners.map((partner) => (
-              <a href={partner?.link} class="w-full">
-                <Picture
-                  src={imageRespToUrl(partner?.image)}
-                  width={350}
-                  height={100}
-                  format="webp"
-                  fit="contain"
-                  background="rgba(0,0,0,0)"
-                  alt={partner?.title ?? ""}
-                  attributes={{
-                    picture: {
-                      class:
-                        "shadow-md hover:scale-110 transition rounded border-gray-100 border",
-                    },
-                  }}
-                />
-              </a>
-            ))}
-          </div>
-        </section>
-      )
-    }
+    {about.partners && <AboutPartnerCards about={about} />}
 
     <div class="mt-20"></div>
   </div>
