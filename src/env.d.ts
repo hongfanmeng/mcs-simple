@@ -1,4 +1,4 @@
-/// <reference types="@astrojs/image/client" />
+/// <reference types="astro/client" />
 
 interface ImportMetaEnv {
   readonly STRAPI_URL: string;
