@@ -719,9 +719,9 @@ export type AboutInput = {
 
 export type About = {
   __typename?: 'About';
-  partners?: Maybe<Array<Maybe<ComponentGeneralCard>>>;
+  partners: Array<Maybe<ComponentGeneralCard>>;
   title: Scalars['String'];
-  image?: Maybe<UploadFileEntityResponse>;
+  image: UploadFileEntityResponse;
   content: Scalars['String'];
   createdAt?: Maybe<Scalars['DateTime']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
@@ -755,7 +755,7 @@ export type ContactInput = {
 
 export type Contact = {
   __typename?: 'Contact';
-  info?: Maybe<Array<Maybe<ComponentGeneralPair>>>;
+  info: Array<Maybe<ComponentGeneralPair>>;
   googleMapAddr: Scalars['String'];
   image: UploadFileEntityResponse;
   createdAt?: Maybe<Scalars['DateTime']>;
@@ -886,6 +886,7 @@ export type PageFiltersInput = {
   title?: InputMaybe<StringFilterInput>;
   name?: InputMaybe<StringFilterInput>;
   link?: InputMaybe<StringFilterInput>;
+  description?: InputMaybe<StringFilterInput>;
   createdAt?: InputMaybe<DateTimeFilterInput>;
   updatedAt?: InputMaybe<DateTimeFilterInput>;
   publishedAt?: InputMaybe<DateTimeFilterInput>;
@@ -899,6 +900,7 @@ export type PageInput = {
   banner?: InputMaybe<Scalars['ID']>;
   name?: InputMaybe<Scalars['String']>;
   link?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']>;
   publishedAt?: InputMaybe<Scalars['DateTime']>;
 };
 
@@ -908,6 +910,7 @@ export type Page = {
   banner?: Maybe<UploadFileEntityResponse>;
   name: Scalars['String'];
   link: Scalars['String'];
+  description: Scalars['String'];
   createdAt?: Maybe<Scalars['DateTime']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
   publishedAt?: Maybe<Scalars['DateTime']>;

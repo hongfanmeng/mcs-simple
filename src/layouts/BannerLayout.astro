@@ -22,7 +22,7 @@ const page = resp.data![0]?.attributes;
 // console.log(page);
 ---
 
-<BaseLayout title={page?.title ?? ""}>
+<BaseLayout title={page?.title ?? ""} description={page?.description}>
   <div class="h-80 bg-gray-200 flex items-center justify-center relative">
     {
       page?.banner?.data && (
