@@ -9,14 +9,14 @@ import type { CardBase } from "./Card.astro";
 import { Picture } from "astro-imagetools/components";
 ---
 
-<div class="main-carousel">
+<div class="main-carousel opacity-0 overflow-hidden">
   {
     slides.map(
       (slide) =>
         slide.imageUrl && (
           <a
             href={slide.link}
-            class="carousel-cell mr-4 lg:w-1/2 rounded-md shadow-md"
+            class="carousel-cell mr-4 lg:w-1/2 rounded-md shadow-md relative"
           >
             <Picture
               src={slide.imageUrl}
@@ -28,8 +28,12 @@ import { Picture } from "astro-imagetools/components";
                 img: {
                   class: "rounded",
                 },
+                picture: {
+                  class: "aspect-video",
+                },
               }}
             />
+
             <div class="absolute inset-0 flex items-center justify-center z-10">
               <div class="w-full h-full bg-black opacity-30 absolute rounded" />
               <div
@@ -64,13 +68,25 @@ import { Picture } from "astro-imagetools/components";
 <script>
   import Flickity from "flickity";
   new Flickity(".main-carousel", {
-    // autoPlay: 3000,
+    autoPlay: 3000,
     wrapAround: true,
   });
+  const carousel = document.querySelector(".main-carousel") as HTMLElement;
+  carousel.style.opacity = "1";
+  carousel.style.overflow = "visible";
 </script>
 
 <style>
   .carousel-cell.is-selected .slide-intro {
     opacity: 1;
+  }
+  .main-carousel {
+    height: calc(100vw / 16 * 9 - 0.5rem);
+  }
+
+  @media (min-width: 1024px) {
+    .main-carousel {
+      height: calc(50vw / 16 * 9 - 0.4rem);
+    }
   }
 </style>
