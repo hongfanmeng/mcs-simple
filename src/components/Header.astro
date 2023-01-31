@@ -1,7 +1,5 @@
 ---
-import { Image } from "@astrojs/image/components";
-import ThumbImage from "./ThumbImage.astro";
-
+import { Picture } from "astro-imagetools/components";
 const navLists = [
   { title: "Home", href: "/" },
   { title: "News", href: "/news/" },
@@ -12,14 +10,15 @@ const navLists = [
 ---
 
 <header class="p-4 max-w-7xl mx-auto w-full flex items-center gap-5">
-  <a href="/">
-    <Image
+  <a href="/" class="h-10 w-[7.5rem]">
+    <Picture
       src="/logo.png"
       format="webp"
       alt="Logo"
       width={180}
       height={60}
-      class="h-10 w-[7.5rem] object-contain"
+      loading="eager"
+      placeholder="none"
     />
   </a>
 

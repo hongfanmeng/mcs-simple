@@ -1,6 +1,6 @@
 ---
 import dayjs from "dayjs";
-import ThumbImage from "@/components/ThumbImage.astro";
+import { Picture } from "astro-imagetools/components";
 
 export interface CardBase {
   title: string;
@@ -27,13 +27,12 @@ const { title, link, description, publishDate, imageUrl } = card;
   ]}
   data-test="article-card"
 >
-  <ThumbImage
+  <Picture
     src={imageUrl ?? "/no-image.jpg"}
     alt={title}
     width={480}
-    height={270}
+    aspect={16 / 9}
     format="webp"
-    classes="w-full aspect-video"
   />
 
   <div class="p-4 lg:p-6">

@@ -10,7 +10,7 @@ import type {
   NewsEntityResponseCollection,
 } from "@/models/types";
 import { articleToCard, imageRespToUrl } from "@/utils";
-import ThumbImage from "@/components/ThumbImage.astro";
+import { Picture } from "astro-imagetools/components";
 
 const newsResp = (await strapi.find("news-list", {
   populate: ["article", "article.cover"],
@@ -86,12 +86,16 @@ const titleClasses = [
         <p style="hyphens:auto" class="text-justify">{about.content}</p>
       </div>
 
-      <ThumbImage
-        classes="w-full rounded aspect-video"
+      <Picture
+        attributes={{
+          img: {
+            class: "rounded",
+          },
+        }}
         src={imageRespToUrl(about.image)}
         alt="image of about us"
         width={640}
-        height={360}
+        aspect={16 / 9}
         format="webp"
       />
     </section>
@@ -135,15 +139,20 @@ const titleClasses = [
           >
             {about.partners.map((partner) => (
               <a href={partner?.link} class="w-full">
-                <Image
+                <Picture
                   src={imageRespToUrl(partner?.image)}
-                  width={250}
+                  width={350}
                   height={100}
                   format="webp"
                   fit="contain"
-                  alt="partner"
-                  background="white"
-                  class="shadow-md hover:scale-110 transition rounded w-full aspect-[5/2] border-gray-100 border"
+                  background="rgba(0,0,0,0)"
+                  alt={partner?.title ?? ""}
+                  attributes={{
+                    picture: {
+                      class:
+                        "shadow-md hover:scale-110 transition rounded border-gray-100 border",
+                    },
+                  }}
                 />
               </a>
             ))}

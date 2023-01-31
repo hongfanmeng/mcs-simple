@@ -1,11 +1,9 @@
 ---
 import strapi from "@/api/strapi";
-import ThumbImage from "@/components/ThumbImage.astro";
+import { Picture } from "astro-imagetools/components";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import type { PageEntityResponseCollection } from "@/models/types";
 import { imageRespToUrl } from "@/utils";
-import { Image } from "@astrojs/image/components";
-
 export interface Props {
   name: string;
 }
@@ -28,19 +26,25 @@ const page = resp.data![0]?.attributes;
   <div class="h-80 bg-gray-200 flex items-center justify-center relative">
     {
       page?.banner?.data && (
-        <ThumbImage
+        <Picture
           src={imageRespToUrl(page.banner)}
-          width={2000}
+          breakpoints={[1000, 2000]}
           height={400}
           format="webp"
           alt={page.title}
-          classes="w-full h-full"
-          imageClasses="object-cover h-full"
+          attributes={{
+            picture: {
+              class: "!h-full",
+            },
+            img: {
+              class: "object-cover !h-full",
+            },
+          }}
         />
       )
     }
-    <div class="absolute inset-0 bg-black opacity-20"></div>
-    <h1 class="absolute text-white text-5xl font-black">
+    <div class="absolute inset-0 bg-black opacity-20 z-10"></div>
+    <h1 class="absolute text-white text-5xl font-black z-10">
       {page?.title}
     </h1>
   </div>

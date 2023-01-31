@@ -7,6 +7,8 @@ import image from "@astrojs/image";
 // https://astro.build/config
 import prefetch from "@astrojs/prefetch";
 
+import { astroImageTools } from "astro-imagetools";
+
 // https://astro.build/config
 export default defineConfig({
   integrations: [
@@ -14,6 +16,7 @@ export default defineConfig({
     image({
       serviceEntryPoint: "@astrojs/image/sharp",
     }),
+    astroImageTools,
     prefetch(),
   ],
 });

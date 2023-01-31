@@ -1,10 +1,9 @@
 ---
 import BannerLayout from "@/layouts/BannerLayout.astro";
-import { Image } from "@astrojs/image/components";
 import strapi from "@/api/strapi";
 import type { AboutEntityResponse } from "@/models/types";
 import { imageRespToUrl } from "@/utils";
-import ThumbImage from "@/components/ThumbImage.astro";
+import { Picture } from "astro-imagetools/components";
 
 const resp = (await strapi.find("about", {
   populate: ["image", "partners.image"],
@@ -22,27 +21,30 @@ const titleClasses = [
   <section
     class:list={[
       "w-full max-w-5xl mx-auto px-5",
-      "flex flex-col md:flex-row gap-5 md:gap-10",
+      "grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-10",
       "mt-10",
     ]}
   >
-    <div class="md:w-0 flex-grow">
+    <div>
       <h2 class:list={[titleClasses, "md:mx-0"]}>
         {about.title}
       </h2>
       <p style="hyphens:auto" class="text-justify">{about.content}</p>
     </div>
 
-    <ThumbImage
-      classes="w-full md:w-0 flex-grow rounded"
+    <Picture
+      attributes={{
+        img: {
+          class: "rounded",
+        },
+      }}
       src={imageRespToUrl(about.image)}
       alt="image of about us"
       width={640}
-      height={360}
+      aspect={16 / 9}
       format="webp"
     />
   </section>
-
   <div class="mt-10"></div>
   {
     about.partners && (
@@ -57,15 +59,20 @@ const titleClasses = [
         >
           {about.partners.map((partner) => (
             <a href={partner?.link} class="w-full">
-              <Image
+              <Picture
                 src={imageRespToUrl(partner?.image)}
-                width={250}
+                width={350}
                 height={100}
                 format="webp"
-                alt={partner?.title ?? ""}
-                class="shadow-md hover:scale-110 transition rounded w-full aspect-[5/2] border-gray-100 border"
                 fit="contain"
-                background="white"
+                background="rgba(0,0,0,0)"
+                alt={partner?.title ?? ""}
+                attributes={{
+                  picture: {
+                    class:
+                      "shadow-md hover:scale-110 transition rounded aspect-[5/2] border-gray-100 border",
+                  },
+                }}
               />
             </a>
           ))}

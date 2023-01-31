@@ -5,9 +5,8 @@ interface Props {
 const { slides } = Astro.props;
 
 import "flickity/css/flickity.css";
-import { Image } from "@astrojs/image/components";
 import type { CardBase } from "./Card.astro";
-import ThumbImage from "./ThumbImage.astro";
+import { Picture } from "astro-imagetools/components";
 ---
 
 <div class="main-carousel">
@@ -15,17 +14,24 @@ import ThumbImage from "./ThumbImage.astro";
     slides.map(
       (slide) =>
         slide.imageUrl && (
-          <a href={slide.link} class="carousel-cell mr-4 lg:w-1/2">
-            <ThumbImage
+          <a
+            href={slide.link}
+            class="carousel-cell mr-4 lg:w-1/2 rounded-md shadow-md"
+          >
+            <Picture
               src={slide.imageUrl}
-              width={1200}
-              height={675}
+              breakpoints={[600, 1200]}
+              aspect={16 / 9}
               format="webp"
               alt={slide.title}
-              classes="rounded shadow-md w-full aspect-video"
+              attributes={{
+                img: {
+                  class: "rounded",
+                },
+              }}
             />
-            <div class="absolute inset-0 flex items-center justify-center">
-              <div class="w-full h-full bg-black opacity-30 absolute" />
+            <div class="absolute inset-0 flex items-center justify-center z-10">
+              <div class="w-full h-full bg-black opacity-30 absolute rounded" />
               <div
                 class:list={[
                   "slide-intro opacity-0 transition duration-300",
@@ -58,7 +64,7 @@ import ThumbImage from "./ThumbImage.astro";
 <script>
   import Flickity from "flickity";
   new Flickity(".main-carousel", {
-    autoPlay: 3000,
+    // autoPlay: 3000,
     wrapAround: true,
   });
 </script>
