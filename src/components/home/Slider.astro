@@ -4,7 +4,7 @@ interface Props {
 }
 const { slides } = Astro.props;
 
-import "flickity/css/flickity.css";
+import "flickity/dist/flickity.min.css";
 import type { CardBase } from "@/components/base/Card.astro";
 import { Picture } from "astro-imagetools/components";
 ---
@@ -77,6 +77,12 @@ import { Picture } from "astro-imagetools/components";
   .carousel-cell.is-selected .slide-intro {
     opacity: 1;
   }
+
+  .carousel-cell:not(.is-selected) {
+    pointer-events: none;
+    cursor: default;
+  }
+
   .main-carousel {
     height: calc(100vw / 16 * 9 - 0.5rem);
   }
@@ -84,10 +90,6 @@ import { Picture } from "astro-imagetools/components";
   @media (min-width: 1024px) {
     .main-carousel {
       height: calc(50vw / 16 * 9 - 0.4rem);
-    }
-    .flickity-button {
-      width: 44px;
-      height: 44px;
     }
   }
 </style>
