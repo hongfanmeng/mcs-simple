@@ -31,13 +31,16 @@ const newsHtml = converter.makeHtml(news.article?.content || "");
 <BannerLayout name="news">
   <div
     class:list={[
-      "w-full max-w-7xl mx-auto p-4 lg:p-10",
-      "flex flex-col gap-4 items-center",
+      "w-full max-w-7xl mx-auto p-6 lg:p-10",
+      "flex flex-col gap-2 lg:gap-4 items-center",
     ]}
   >
     <h2 class="font-semibold text-3xl">{news.article?.title}</h2>
     <span class="text-gray-600">{news.article?.publishDate}</span>
     <hr class="w-full" />
-    <div class="text-justify text-lg flex flex-col gap-4" set:html={newsHtml} />
+    <div
+      class="text-justify text-lg flex flex-col gap-4 w-full"
+      set:html={newsHtml}
+    />
   </div>
 </BannerLayout>
