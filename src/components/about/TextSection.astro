@@ -2,31 +2,26 @@
 import type { About } from "@/models/types";
 import { Picture } from "astro-imagetools/components";
 import { imageRespToUrl } from "@/utils";
+import { titleClasses } from "@/utils";
 
 interface Props {
   about: About;
 }
 
 const { about } = Astro.props;
-
-const titleClasses = [
-  "font-semibold mb-2 mx-auto w-fit",
-  "text-xl md:text-2xl lg:text-3xl",
-];
 ---
 
 <section
   class:list={[
     "w-full max-w-5xl mx-auto px-5",
     "grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-10",
-    "mt-10",
   ]}
 >
   <div>
-    <h2 class:list={[titleClasses, "md:mx-0"]}>
+    <h2 class:list={[titleClasses, "mb-3 lg:mx-0"]}>
       {about.title}
     </h2>
-    <p style="hyphens:auto" class="text-justify">{about.content}</p>
+    <p style="hyphens:auto" class="text-justify text-lg">{about.content}</p>
   </div>
 
   <Picture

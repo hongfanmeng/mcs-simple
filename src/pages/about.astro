@@ -14,8 +14,8 @@ const about = resp.data?.attributes!;
 ---
 
 <BannerLayout name="about">
-  <AboutTextSection about={about} />
-  <div class="mt-10"></div>
-  {about.partners && <AboutPartnerCards about={about} />}
-  <div class="mt-10"></div>
+  <div class="flex flex-col gap-10 lg:gap-16 my-10">
+    <AboutTextSection about={about} />
+    {about.partners && <AboutPartnerCards about={about} />}
+  </div>
 </BannerLayout>

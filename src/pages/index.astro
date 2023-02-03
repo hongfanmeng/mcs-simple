@@ -11,6 +11,7 @@ import type {
 import { articleToCard } from "@/utils";
 import AboutTextSection from "@/components/about/TextSection.astro";
 import AboutPartnerCards from "@/components/about/PartnerCards.astro";
+import { titleClasses } from "@/utils";
 
 const newsResp = (await strapi.find("news-list", {
   populate: ["article", "article.cover"],
@@ -62,11 +63,6 @@ const aboutResp = (await strapi.find("about", {
   populate: ["image", "partners.image"],
 })) as AboutEntityResponse;
 const about = aboutResp.data?.attributes!;
-
-const titleClasses = [
-  "font-semibold mb-2 mx-auto w-fit",
-  "text-xl md:text-2xl lg:text-3xl",
-];
 ---
 
 <BaseLayout title="Home" description={about?.content}>
@@ -76,7 +72,7 @@ const titleClasses = [
     <AboutTextSection about={about} />
 
     <section class="px-5">
-      <h2 class:list={titleClasses}>News</h2>
+      <h2 class:list={[titleClasses, "mb-8"]}>News</h2>
 
       <div
         class:list={[
@@ -89,7 +85,7 @@ const titleClasses = [
     </section>
 
     <section class="px-5">
-      <h2 class:list={titleClasses}>Events</h2>
+      <h2 class:list={[titleClasses, "mb-8"]}>Events</h2>
 
       <div
         class:list={[

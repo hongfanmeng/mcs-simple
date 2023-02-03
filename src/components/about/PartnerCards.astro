@@ -2,31 +2,27 @@
 import type { About } from "@/models/types";
 import { Picture } from "astro-imagetools/components";
 import { imageRespToUrl } from "@/utils";
+import { titleClasses } from "@/utils";
 
 interface Props {
   about: About;
 }
 
 const { about } = Astro.props;
-
-const titleClasses = [
-  "font-semibold mb-2 mx-auto w-fit",
-  "text-xl md:text-2xl lg:text-3xl",
-];
 ---
 
 <section class="px-5">
-  <h2 class:list={titleClasses}>Our Partners</h2>
+  <h2 class:list={[titleClasses, "mb-3 lg:mb-6"]}>Our Partners</h2>
 
   <div
     class:list={[
-      "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-10 mt-5",
-      "max-w-5xl w-full mx-auto",
+      "grid grid-cols-2 lg:grid-cols-4 gap-2 lg:gap-5 lg:gap-10",
+      "mt-5 mx-auto w-fit",
     ]}
   >
     {
       about.partners.map((partner) => (
-        <a href={partner?.link} class="w-full">
+        <a href={partner?.link} class="w-fit">
           <Picture
             src={imageRespToUrl(partner?.image)}
             width={320}
@@ -38,7 +34,10 @@ const titleClasses = [
             attributes={{
               picture: {
                 class:
-                  "shadow-md hover:scale-110 transition rounded border-gray-100 border",
+                  "shadow-md hover:scale-110 transition rounded border-gray-100 border w-full !max-w-[16rem]",
+              },
+              img: {
+                class: "w-full",
               },
             }}
           />

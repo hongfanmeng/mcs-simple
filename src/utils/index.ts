@@ -20,4 +20,6 @@ const articleToCard = (article: ComponentGeneralArticle, link: string) => {
   } as CardBase;
 };
 
-export { imageRespToUrl, articleToCard };
+const titleClasses = ["font-bold mx-auto w-fit", "text-3xl lg:text-4xl"];
+
+export { imageRespToUrl, articleToCard, titleClasses };

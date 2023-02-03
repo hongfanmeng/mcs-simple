@@ -9,7 +9,7 @@ import type { CardBase } from "@/components/base/Card.astro";
 import { Picture } from "astro-imagetools/components";
 ---
 
-<div class="main-carousel opacity-0 overflow-hidden">
+<div class="main-carousel opacity-0 overflow-hidden mb-4">
   {
     slides.map(
       (slide) =>
@@ -39,7 +39,7 @@ import { Picture } from "astro-imagetools/components";
                   "px-16 lg:px-20 gap-4 w-full z-10 flex flex-col items-center pt-4 lg:pt-0",
                 ]}
               >
-                <h2 class="text-xl lg:text-5xl font-black lg:!leading-[4rem] text-white text-center truncate w-full">
+                <h2 class="text-2xl lg:text-5xl font-black lg:!leading-[4rem] text-white text-center truncate w-full">
                   {slide.title}
                 </h2>
                 <p class="hidden lg:block truncate text-white font-semibold text-lg lg:text-xl w-full -mt-3">
